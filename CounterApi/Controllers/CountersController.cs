@@ -23,5 +23,11 @@ namespace CounterApi.Controllers
         {
             return Counters;
         }
+
+        [HttpPost(Name = "PostCounter")]
+        public void Post(Counter counter)
+        {
+            Counters.Add(counter);
+        }
     }
 }
