@@ -68,5 +68,17 @@ namespace CounterApi.Controllers
 
             return Ok();
         }
+
+        [HttpGet("{name}")]
+        public ActionResult<Counter> GetCounter(string name)
+        {
+            int index = Counters.FindIndex(c => c.Name == name);
+            if (index == -1)
+            {
+                return NotFound();
+            }
+
+            return Counters[index];
+        }
     }
 }
