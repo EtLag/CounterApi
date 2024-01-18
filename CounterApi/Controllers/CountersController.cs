@@ -1,3 +1,4 @@
+using CounterApi.Data;
 using CounterApi.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections;
@@ -13,26 +14,31 @@ namespace CounterApi.Controllers
 
         private readonly ILogger<CountersController> _logger;
 
-        public CountersController(ILogger<CountersController> logger)
+        private readonly CounterDbContext _context;
+
+        public CountersController(ILogger<CountersController> logger, CounterDbContext context)
         {
             Counters.Add(new Counter() { Name = "GenericCounter", Number = 1});
             _logger = logger;
+            _context = context;
         }
 
         [HttpGet]
         public IEnumerable<Counter> GetCounters()
         {
-            return Counters;
+            return _context.Counters;
         }
 
         [HttpPost]
         public ActionResult PostCounter(string name)
         {
+            Counters = _context.Counters.ToList();
             int index = Counters.FindIndex(x => x.Name == name);
             if (index == -1)
             {
                 Counter counter = new Counter() { Name = name, Number = 1 };
-                Counters.Add(counter);
+                _context.Counters.Add(counter);
+                _context.SaveChanges();
                 return Ok();
             }
 
@@ -42,18 +48,22 @@ namespace CounterApi.Controllers
         [HttpPut("{name}")]
         public ActionResult PutCounter(string name)
         {
+            Counters = _context.Counters.ToList();
             int index = Counters.FindIndex(c => c.Name == name);
             if(index == -1)
             {
                 return NotFound();
             }
             Counters[index].Number++;
+            _context.Counters.Update(Counters[index]);
+            _context.SaveChanges();
             return Ok();
         }
 
         [HttpDelete("{name}")]
         public ActionResult DeleteCounter(string name)
         {
+            Counters = _context.Counters.ToList();
             int index = Counters.FindIndex(c => c.Name == name);
             if (index == -1)
             {
@@ -63,10 +73,28 @@ namespace CounterApi.Controllers
             Counters[index].Number--;
             if (Counters[index].Number == 0)
             {
-                Counters.Remove(Counters[index]);
+                _context.Counters.Remove(Counters[index]);
             }
+            else
+            {
+                _context.Counters.Update(Counters[index]);
+            }
+            _context.SaveChanges();
 
             return Ok();
+        }
+
+        [HttpGet("{name}")]
+        public ActionResult<Counter> GetCounter(string name)
+        {
+            Counters = _context.Counters.ToList();
+            int index = Counters.FindIndex(c => c.Name == name);
+            if (index == -1)
+            {
+                return NotFound();
+            }
+
+            return Counters[index];
         }
     }
 }
