@@ -1,3 +1,4 @@
+using CounterApi.Data;
 using CounterApi.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections;
@@ -13,16 +14,19 @@ namespace CounterApi.Controllers
 
         private readonly ILogger<CountersController> _logger;
 
-        public CountersController(ILogger<CountersController> logger)
+        private readonly CounterDbContext _context;
+
+        public CountersController(ILogger<CountersController> logger, CounterDbContext context)
         {
             Counters.Add(new Counter() { Name = "GenericCounter", Number = 1});
             _logger = logger;
+            _context = context;
         }
 
         [HttpGet]
         public IEnumerable<Counter> GetCounters()
         {
-            return Counters;
+            return _context.Counters;
         }
 
         [HttpPost]
