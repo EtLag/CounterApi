@@ -30,3 +30,4 @@ D:\Repositories\Counter\CounterApi\CounterApi\obj\Debug\net8.0\refint\CounterApi
 D:\Repositories\Counter\CounterApi\CounterApi\obj\Debug\net8.0\CounterApi.pdb
 D:\Repositories\Counter\CounterApi\CounterApi\obj\Debug\net8.0\CounterApi.genruntimeconfig.cache
 D:\Repositories\Counter\CounterApi\CounterApi\obj\Debug\net8.0\ref\CounterApi.dll
+D:\Repositories\Counter\CounterApi\CounterApi\obj\Debug\net8.0\CounterApi.sourcelink.json

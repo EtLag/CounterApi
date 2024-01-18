@@ -1,4 +1,7 @@
+using CounterApi.Models;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections;
+using System.Collections.Generic;
 
 namespace CounterApi.Controllers
 {
@@ -6,10 +9,7 @@ namespace CounterApi.Controllers
     [Route("[controller]")]
     public class CountersController : ControllerBase
     {
-        private static readonly string[] Summaries = new[]
-        {
-            "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-        };
+        private List<Counter> Counters = new List<Counter>();
 
         private readonly ILogger<CountersController> _logger;
 
@@ -18,16 +18,10 @@ namespace CounterApi.Controllers
             _logger = logger;
         }
 
-        [HttpGet(Name = "GetWeatherForecast")]
-        public IEnumerable<WeatherForecast> Get()
+        [HttpGet(Name = "GetCounters")]
+        public IEnumerable<Counter> Get()
         {
-            return Enumerable.Range(1, 5).Select(index => new WeatherForecast
-            {
-                Date = DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
-                TemperatureC = Random.Shared.Next(-20, 55),
-                Summary = Summaries[Random.Shared.Next(Summaries.Length)]
-            })
-            .ToArray();
+            return Counters;
         }
     }
 }
