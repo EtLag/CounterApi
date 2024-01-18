@@ -28,9 +28,15 @@ namespace CounterApi.Controllers
         [HttpPost]
         public ActionResult PostCounter(string name)
         {
-            Counter counter = new Counter() { Name = name, Number = 1 };
-            Counters.Add(counter);
-            return Ok();
+            int index = Counters.FindIndex(x => x.Name == name);
+            if (index == -1)
+            {
+                Counter counter = new Counter() { Name = name, Number = 1 };
+                Counters.Add(counter);
+                return Ok();
+            }
+
+            return BadRequest();
         }
 
         [HttpPut("{name}")]
@@ -42,6 +48,24 @@ namespace CounterApi.Controllers
                 return NotFound();
             }
             Counters[index].Number++;
+            return Ok();
+        }
+
+        [HttpDelete("{name}")]
+        public ActionResult DeleteCounter(string name)
+        {
+            int index = Counters.FindIndex(c => c.Name == name);
+            if (index == -1)
+            {
+                return NotFound();
+            }
+
+            Counters[index].Number--;
+            if (Counters[index].Number == 0)
+            {
+                Counters.Remove(Counters[index]);
+            }
+
             return Ok();
         }
     }
