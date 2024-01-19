@@ -1,7 +1,10 @@
+using Moq;
+
 namespace CounterApiTests
 {
     public class Tests
     {
+        private Mock<Counter>
         [SetUp]
         public void Setup()
         {

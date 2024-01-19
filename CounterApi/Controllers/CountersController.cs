@@ -1,5 +1,6 @@
 using CounterApi.Data;
 using CounterApi.Models;
+using CounterApi.Repository;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections;
 using System.Collections.Generic;
@@ -14,31 +15,29 @@ namespace CounterApi.Controllers
 
         private readonly ILogger<CountersController> _logger;
 
-        private readonly CounterDbContext _context;
+        private readonly CounterRepository _repository;
 
         public CountersController(ILogger<CountersController> logger, CounterDbContext context)
         {
             Counters.Add(new Counter() { Name = "GenericCounter", Number = 1});
             _logger = logger;
-            _context = context;
+            _repository = new CounterRepository(context);
         }
 
         [HttpGet]
         public IEnumerable<Counter> GetCounters()
         {
-            return _context.Counters;
+            return _repository.GetAllCounters();
         }
 
         [HttpPost]
         public ActionResult PostCounter(string name)
         {
-            Counters = _context.Counters.ToList();
-            int index = Counters.FindIndex(x => x.Name == name);
-            if (index == -1)
+            Counter? counter = _repository.GetCounter(name);
+            if (counter == null)
             {
-                Counter counter = new Counter() { Name = name, Number = 1 };
-                _context.Counters.Add(counter);
-                _context.SaveChanges();
+                counter = new Counter() { Name = name, Number = 1 };
+                _repository.Insert(counter);
                 return Ok();
             }
 
@@ -48,38 +47,34 @@ namespace CounterApi.Controllers
         [HttpPut("{name}")]
         public ActionResult PutCounter(string name)
         {
-            Counters = _context.Counters.ToList();
-            int index = Counters.FindIndex(c => c.Name == name);
-            if(index == -1)
+            Counter? counter = _repository.GetCounter(name);
+            if (counter == null)
             {
                 return NotFound();
             }
-            Counters[index].Number++;
-            _context.Counters.Update(Counters[index]);
-            _context.SaveChanges();
+            counter.Number++;
+            _repository.Update(counter);
             return Ok();
         }
 
         [HttpDelete("{name}")]
         public ActionResult DeleteCounter(string name)
         {
-            Counters = _context.Counters.ToList();
-            int index = Counters.FindIndex(c => c.Name == name);
-            if (index == -1)
+            Counter? counter = _repository.GetCounter(name);
+            if (counter == null)
             {
                 return NotFound();
             }
 
-            Counters[index].Number--;
-            if (Counters[index].Number == 0)
+            counter.Number--;
+            if (counter.Number == 0)
             {
-                _context.Counters.Remove(Counters[index]);
+                _repository.Delete(counter);
             }
             else
             {
-                _context.Counters.Update(Counters[index]);
+                _repository.Update(counter);
             }
-            _context.SaveChanges();
 
             return Ok();
         }
@@ -87,14 +82,13 @@ namespace CounterApi.Controllers
         [HttpGet("{name}")]
         public ActionResult<Counter> GetCounter(string name)
         {
-            Counters = _context.Counters.ToList();
-            int index = Counters.FindIndex(c => c.Name == name);
-            if (index == -1)
+            Counter? counter = _repository.GetCounter(name);
+            if (counter == null)
             {
                 return NotFound();
             }
 
-            return Counters[index];
+            return counter;
         }
     }
 }
