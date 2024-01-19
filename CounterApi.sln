@@ -5,7 +5,10 @@ VisualStudioVersion = 17.8.34309.116
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CounterApi", "CounterApi\CounterApi.csproj", "{3278774D-CC25-4FD2-AE2B-4A428627F0D2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CounterApiTests", "CounterApiTests\CounterApiTests.csproj", "{3DBB46A5-D8AB-42A8-B9B3-43F36C99EC01}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CounterApiTests", "CounterApiTests\CounterApiTests.csproj", "{3DBB46A5-D8AB-42A8-B9B3-43F36C99EC01}"
+	ProjectSection(ProjectDependencies) = postProject
+		{3278774D-CC25-4FD2-AE2B-4A428627F0D2} = {3278774D-CC25-4FD2-AE2B-4A428627F0D2}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
