@@ -1,0 +1,136 @@
+{
+	"info": {
+		"_postman_id": "35cbbb73-9e34-4287-a014-c0a9695fdda5",
+		"name": "CounterApi",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "32428960"
+	},
+	"item": [
+		{
+			"name": "Get Counters",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:44338/Counters/",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "44338",
+					"path": [
+						"Counters",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Counter",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:44338/Counters/GenericCounter",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "44338",
+					"path": [
+						"Counters",
+						"GenericCounter"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Post Counter",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:44338/Counters/?name=GenericCounter2",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "44338",
+					"path": [
+						"Counters",
+						""
+					],
+					"query": [
+						{
+							"key": "name",
+							"value": "GenericCounter2"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Del GenericCounter",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:44338/Counters/GenericCounter",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "44338",
+					"path": [
+						"Counters",
+						"GenericCounter"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Del GenericCounter2",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:44338/Counters/GenericCounter2",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "44338",
+					"path": [
+						"Counters",
+						"GenericCounter2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Put GenericCounter",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:44338/Counters/GenericCounter",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "44338",
+					"path": [
+						"Counters",
+						"GenericCounter"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
